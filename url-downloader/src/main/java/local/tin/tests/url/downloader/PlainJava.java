@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
+import local.tin.tests.url.downloader.utils.StreamUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -33,12 +34,7 @@ public class PlainJava {
         if (args.length != 1) {
             LOGGER.error(USAGE_STRING);
         } else {
-            URL url = new URL(args[0]);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // Cast shouldn't fail
-            HttpURLConnection.setFollowRedirects(true);
-            conn.setRequestProperty(ACCEPT_ENCODING_HEADER, ACCEPTED_ENCODINGS);
-
-            InputStream inputStream = getInputStream(conn);
+            InputStream inputStream = StreamUtils.getInstance().getInputStream(args[0]);
             String streamAsString = getStreamAsMultiLineString(inputStream);
             LOGGER.info(streamAsString);
         }
