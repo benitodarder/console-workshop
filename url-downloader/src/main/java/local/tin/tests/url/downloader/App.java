@@ -12,7 +12,7 @@ public class App {
     public static final String USAGE_STRING = "Usage: java -cp url-downloader.jar local.tin.tests.url.downloader.<Downloader class> <URL>\n\t- PlainJava\n\t- JSoup";    
     private static final Logger LOGGER = Logger.getLogger(App.class);
     /**
-     * @param args the command line argumentsdeflate";
+     * @param args the command line
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {

@@ -26,7 +26,7 @@ public class PlainJava {
     private static final Logger LOGGER = Logger.getLogger(PlainJava.class);
 
     /**
-     * @param args the command line argumentsdeflate";
+     * @param args the command line 
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {

@@ -1,19 +1,10 @@
 package local.tin.tests.url.downloader;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import javax.xml.XMLConstants;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Node;
 
 /**
  *
@@ -25,7 +16,7 @@ public class JSoup {
     private static final Logger LOGGER = Logger.getLogger(JSoup.class);
 
     /**
-     * @param args the command line argumentsdeflate";
+     * @param args the command line 
      * @throws javax.xml.transform.TransformerException
      * @throws java.io.IOException
      */
