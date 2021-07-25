@@ -11,7 +11,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,6 +31,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({Base64Utils.class, StreamUtils.class})
 public class JSoupUtilsTest {
 
+    private static final String SAMPLE_URL = "https://a.c.d/";
     private static final String URL_STRING_PREFIX = "url string";
     private static final String URL_STRING_SUFIX = "url sufix";
     private static final String ENCODED_BYTE_ARRAY = "encoded";
@@ -57,15 +62,17 @@ public class JSoupUtilsTest {
         when(mockedDocument.getElementsByTag(JSoupUtils.TAG_IMG)).thenReturn(mockedElements);
         mockedElement = mock(Element.class);
         mockedElements.add(mockedElement);
-        mockedInputStream = mock(InputStream.class);
-        when(mockedStreamUtils.getInputStream(URL_STRING_PREFIX + JSoupUtils.URL_ELEMENT_SEPARATOR + IMG_NAME + JSoupUtils.FILE_EXTENSION_SEPARATOR + IMG_EXTENSION)).thenReturn(mockedInputStream);
-        when(mockedStreamUtils.getByteArrayFromInputStream(mockedInputStream)).thenReturn(SAMPLE_BYTE_ARRAY);
-        when(mockedBase64Utils.encode(SAMPLE_BYTE_ARRAY)).thenReturn(ENCODED_BYTE_ARRAY);
+        reset(mockedBase64Utils);
+        reset(mockedStreamUtils);
     }
 
     @Test
     public void convertToInlinImage_with_images_without_url() throws IOException {
         when(mockedElement.attr(JSoupUtils.ATRIBUTE_SRC)).thenReturn(IMG_NAME + JSoupUtils.FILE_EXTENSION_SEPARATOR + IMG_EXTENSION);
+        mockedInputStream = mock(InputStream.class);
+        when(mockedStreamUtils.getInputStream(URL_STRING_PREFIX + JSoupUtils.URL_ELEMENT_SEPARATOR + IMG_NAME + JSoupUtils.FILE_EXTENSION_SEPARATOR + IMG_EXTENSION)).thenReturn(mockedInputStream);
+        when(mockedStreamUtils.getByteArrayFromInputStream(mockedInputStream)).thenReturn(SAMPLE_BYTE_ARRAY);
+        when(mockedBase64Utils.encode(SAMPLE_BYTE_ARRAY)).thenReturn(ENCODED_BYTE_ARRAY);
 
         JSoupUtils.getInstance().convertToInlineImages(URL_STRING_PREFIX + JSoupUtils.URL_ELEMENT_SEPARATOR + URL_STRING_SUFIX, mockedDocument);
 
@@ -73,4 +80,30 @@ public class JSoupUtilsTest {
         verify(mockedElement).attr(JSoupUtils.ATRIBUTE_SRC, MessageFormat.format(JSoupUtils.INLINE_IMG_PREFIX_TEMPLATE, argument) + ENCODED_BYTE_ARRAY);
     }
 
+    @Test
+    public void convertToInlinImage_ignores_already_embedded_image() throws IOException {
+        Object[] argument = {IMG_EXTENSION};
+        when(mockedElement.attr(JSoupUtils.ATRIBUTE_SRC)).thenReturn(MessageFormat.format(JSoupUtils.INLINE_IMG_PREFIX_TEMPLATE, argument) + ENCODED_BYTE_ARRAY);
+
+        JSoupUtils.getInstance().convertToInlineImages(URL_STRING_PREFIX + JSoupUtils.URL_ELEMENT_SEPARATOR + URL_STRING_SUFIX, mockedDocument);
+
+        verify(mockedStreamUtils, never()).getInputStream(anyString());
+        verify(mockedStreamUtils, never()).getByteArrayFromInputStream(any(InputStream.class));
+        verify(mockedBase64Utils, never()).encode(any(byte[].class));
+        verify(mockedElement, never()).attr(eq(JSoupUtils.ATRIBUTE_SRC), anyString());
+    }
+
+    @Test
+    public void convertToInlinImage_with_images_with_url() throws IOException {
+        when(mockedElement.attr(JSoupUtils.ATRIBUTE_SRC)).thenReturn(SAMPLE_URL + IMG_NAME + JSoupUtils.FILE_EXTENSION_SEPARATOR + IMG_EXTENSION);
+        mockedInputStream = mock(InputStream.class);
+        when(mockedStreamUtils.getInputStream(SAMPLE_URL + IMG_NAME + JSoupUtils.FILE_EXTENSION_SEPARATOR + IMG_EXTENSION)).thenReturn(mockedInputStream);
+        when(mockedStreamUtils.getByteArrayFromInputStream(mockedInputStream)).thenReturn(SAMPLE_BYTE_ARRAY);
+        when(mockedBase64Utils.encode(SAMPLE_BYTE_ARRAY)).thenReturn(ENCODED_BYTE_ARRAY);
+
+        JSoupUtils.getInstance().convertToInlineImages(URL_STRING_PREFIX + JSoupUtils.URL_ELEMENT_SEPARATOR + URL_STRING_SUFIX, mockedDocument);
+
+        Object[] argument = {IMG_EXTENSION};
+        verify(mockedElement).attr(JSoupUtils.ATRIBUTE_SRC, MessageFormat.format(JSoupUtils.INLINE_IMG_PREFIX_TEMPLATE, argument) + ENCODED_BYTE_ARRAY);
+    }
 }
