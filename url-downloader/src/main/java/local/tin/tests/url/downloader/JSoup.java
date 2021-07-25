@@ -1,16 +1,11 @@
 package local.tin.tests.url.downloader;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import javax.xml.transform.TransformerException;
-import local.tin.tests.url.downloader.utils.Base64Utils;
 import local.tin.tests.url.downloader.utils.JSoupUtils;
-import local.tin.tests.url.downloader.utils.StreamUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  *
