@@ -5,19 +5,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.zip.CRC32;
+import java.util.zip.CheckedInputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-import static local.tin.tests.url.downloader.PlainJava.ACCEPTED_ENCODINGS;
-import static local.tin.tests.url.downloader.PlainJava.ACCEPT_ENCODING_HEADER;
-import static local.tin.tests.url.downloader.PlainJava.ENCODING_DEFLATE;
-import static local.tin.tests.url.downloader.PlainJava.ENCODING_GZIP;
 
 /**
  *
  * @author benitodarder
  */
 public class StreamUtils {
+    
+
+    public static final String ENCODING_DEFLATE = "deflate";
+    public static final String ENCODING_GZIP = "gzip";
+    public static final String ACCEPTED_ENCODINGS = ENCODING_GZIP + ", " + ENCODING_DEFLATE;
+    public static final String ACCEPT_ENCODING_HEADER = "Accept-Encoding";     
 
     private StreamUtils() {
     }
@@ -66,5 +70,13 @@ public class StreamUtils {
 
         return buffer.toByteArray();
 
+    }
+
+    public long getChecksumCRC32(InputStream stream, int bufferSize) throws IOException {
+        CheckedInputStream checkedInputStream = new CheckedInputStream(stream, new CRC32());
+        byte[] buffer = new byte[bufferSize];
+        while (checkedInputStream.read(buffer, 0, buffer.length) >= 0) {
+        }
+        return checkedInputStream.getChecksum().getValue();
     }
 }

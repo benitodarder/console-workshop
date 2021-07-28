@@ -44,18 +44,5 @@ public class PlainJava {
         return new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private static InputStream getInputStream(HttpURLConnection conn) throws IOException {
-        String encoding = conn.getContentEncoding();
-        InputStream inStr = null;
-        if (encoding != null && encoding.equalsIgnoreCase(ENCODING_GZIP)) {
-            inStr = new GZIPInputStream(conn.getInputStream());
-        } else if (encoding != null && encoding.equalsIgnoreCase(ENCODING_DEFLATE)) {
-            inStr = new InflaterInputStream(conn.getInputStream(),
-                    new Inflater(true));
-        } else {
-            inStr = conn.getInputStream();
-        }
-        return inStr;
-    }
 
 }

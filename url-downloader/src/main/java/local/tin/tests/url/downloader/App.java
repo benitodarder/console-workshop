@@ -9,7 +9,10 @@ import org.apache.log4j.Logger;
  */
 public class App {
     
-    public static final String USAGE_STRING = "Usage: java -cp url-downloader.jar local.tin.tests.url.downloader.<Downloader class> <URL>\n\t- PlainJava\n\t- JSoup";    
+    public static final String USAGE_STRING = "Usage: java -cp url-downloader.jar local.tin.tests.url.downloader.<Downloader class> <URL>"
+            + "\n\t- PlainJava"
+            + "\n\t- JSoup2Inline"
+            + "\n\t- JSoup2LocalFiles";    
     private static final Logger LOGGER = Logger.getLogger(App.class);
     /**
      * @param args the command line

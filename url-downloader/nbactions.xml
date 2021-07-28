@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath local.tin.tests.url.downloader.App http://www.columbia.edu/~fdc/sample.html</exec.args>
+                <exec.args>-classpath %classpath local.tin.tests.url.downloader.JSoup2LocalFiles http://www.columbia.edu/~fdc/sample.html /home/benitodarder/Development/gitHub/benitodarder/05/console-workshop/url-downloader</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath local.tin.tests.url.downloader.App http://www.columbia.edu/~fdc/sample.html</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath local.tin.tests.url.downloader.JSoup2LocalFiles http://www.columbia.edu/~fdc/sample.html /home/benitodarder/Development/gitHub/benitodarder/05/console-workshop/url-downloader</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath local.tin.tests.url.downloader.App http://www.columbia.edu/~fdc/sample.html</exec.args>
+                <exec.args>-classpath %classpath local.tin.tests.url.downloader.JSoup2LocalFiles http://www.columbia.edu/~fdc/sample.html /home/benitodarder/Development/gitHub/benitodarder/05/console-workshop/url-downloader</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
