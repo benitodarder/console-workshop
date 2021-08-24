@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntegersList>
+    <values>
+        <integer>177</integer>
+        <integer>1</integer>
+        <integer>2</integer>
+        <integer>3</integer>
+        <integer>4</integer>
+        <integer>19</integer>
+        <integer>1029</integer>
+    </values>
+    <operation>SUM</operation>
+</IntegersList>
