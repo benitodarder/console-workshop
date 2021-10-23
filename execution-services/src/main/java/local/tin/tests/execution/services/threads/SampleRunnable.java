@@ -22,8 +22,9 @@ public class SampleRunnable implements Runnable {
     public void run() {
         LOGGER.info("I'm " + taskName + " of " +  getClass().getSimpleName() + " and will sleep for " + sleepTime + "ms");
         try {
+            long t0 = System.currentTimeMillis();
             Thread.sleep(sleepTime);
-            LOGGER.info("I'm " + taskName + " of " +  getClass().getSimpleName() + " and I woke up at " + new Date());
+            LOGGER.info("I'm " + taskName + " of " +  getClass().getSimpleName() + " and I woke after " + (System.currentTimeMillis() - t0) + "ms");
         } catch (InterruptedException ex) {
             LOGGER.error("Unexpected InterruptedException at " + taskName + " of " +  getClass().getSimpleName() + " because " + ex.getLocalizedMessage());
         }
