@@ -12,13 +12,14 @@ import java.util.logging.Logger;
  * @author benitodarder
  */
 public class LocalDateTimeToUTC {
-    
+
     private static final String DEFAULT_TIMEZONE = "UTC";
     private static final Logger LOGGER = Logger.getLogger("LocalDateTimeToUTC");
-    
+
     public static void main(String[] args) {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s%n");
         String timeZone = DEFAULT_TIMEZONE;
-        if (args.length == 1)  {
+        if (args.length == 1) {
             timeZone = args[0];
         }
         LocalDateTime now = LocalDateTime.now();
