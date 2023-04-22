@@ -26,7 +26,7 @@ public class LocalDateTimeToUTC {
         ZoneId systemZoneId = ZoneId.systemDefault();
         LOGGER.log(Level.INFO, "Using LocalDateTime, now its: {0}", now.format(DateTimeFormatter.ISO_DATE_TIME));
         LOGGER.log(Level.INFO, "Using ZonedDateTime  with system time zone, now its: {0}", now.atZone(systemZoneId).format(DateTimeFormatter.ISO_DATE_TIME));
-        LOGGER.log(Level.INFO, "Using ZonedDateTime  with UTC time zone, now its: {0}", LocalDateTime.ofInstant(Instant.now(), ZoneId.of(timeZone)).atZone(ZoneId.of(timeZone)));
+        LOGGER.log(Level.INFO, "Converting to timezone: {0}", now.atZone(systemZoneId).withZoneSameInstant(ZoneId.of(timeZone)));                
         LOGGER.info("Thats all...");
     }
 
